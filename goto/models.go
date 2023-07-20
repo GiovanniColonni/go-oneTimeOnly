@@ -1,4 +1,4 @@
-package goto
+package backend
 
 // Stored Secret
 type StoredSecret struct {

@@ -3,12 +3,13 @@ package goto
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-func HealthCeckHandler(c *gin.Context) {
+func HealthCeckHandler() {
 	//status := &Status{status: "ok"}
 
-	c.JSON(http.StatusOK, "OK")
 }
 
 func GetSecretHandler(c *gin.Context) {
@@ -37,8 +38,6 @@ func PostSecretHandler(c *gin.Context) {
 	}
 
 	defer c.Request.Body.Close()
-
-	
 
 	c.JSON(http.StatusOK, resp)
 
