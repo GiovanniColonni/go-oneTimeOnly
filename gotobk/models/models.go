@@ -1,4 +1,4 @@
-package gotobk
+package model
 
 // Stored Secret
 type StoredSecret struct {
