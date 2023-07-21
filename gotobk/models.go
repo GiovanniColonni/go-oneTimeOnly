@@ -1,4 +1,4 @@
-package backend
+package gotobk
 
 // Stored Secret
 type StoredSecret struct {
