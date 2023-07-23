@@ -6,6 +6,8 @@ import (
 	"net/http"
 	functions "onetimeonly/backend/gotobk/functions"
 	model "onetimeonly/backend/gotobk/models"
+
+	"github.com/gorilla/mux"
 )
 
 const (
@@ -19,8 +21,8 @@ func HealthCeckHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetSecretHandler(w http.ResponseWriter, r *http.Request) {
-	urls := r.URL.Query()
-	secretId := urls.Get("id")
+	vars := mux.Vars(r)["id"]
+	secretId := vars
 
 	fmt.Print("secretId: ", secretId, "\n")
 
@@ -32,13 +34,16 @@ func GetSecretHandler(w http.ResponseWriter, r *http.Request) {
 	secret, err := functions.GetSecret(secretId)
 	if err != nil {
 		fmt.Print("Can't find secret, err: ", err)
-		http.Error(w, "Can't find secret", http.StatusInternalServerError)
+		http.Error(w, "Can't find secret", http.StatusNotFound)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	fmt.Print("\n secret: ", secret, "\n")
+
 	w.Header().Set("Access-Control-Allow-Origin", origin)
+	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(secret))
+
 }
 
 func PostSecretHandler(w http.ResponseWriter, r *http.Request) {
@@ -50,7 +55,12 @@ func PostSecretHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "bad payload", http.StatusBadRequest)
 		return
 	}
+	fmt.Print("reqBody raw: ", r.Body, "\n")
+	fmt.Print("reqBody: ", reqBody, "\n")
+
 	id := functions.StoreSecret(reqBody)
+	fmt.Print("secret id: ", id, "\n")
+
 	if id == "" {
 		fmt.Print("Error in storing secret")
 		http.Error(w, "Error in storing secret", http.StatusInternalServerError)

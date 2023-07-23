@@ -53,7 +53,6 @@ const EncryptPage = () => {
                 console.error("Error in storeSecret...")
                 return
             }
-            console.debug("id: ",id)
             setLink(createLink(id,password))
     
             setSend(!send)

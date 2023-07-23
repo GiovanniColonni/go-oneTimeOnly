@@ -3,24 +3,38 @@ import { retrieveSecret } from '../api';
 
 function DecryptPage(){
 
+    
     const queryParameters = new URLSearchParams(window.location.search)
 
-    const id = queryParameters.get('code').split('.')[0]
-    const password = queryParameters.get('code').split('.')[1]
+    const [secretID, setSecretID] = useState("")
+    const [retrieved,setRetrived] = useState(false)
+    const [secretValue,setSecretValue] = useState("")
     
-    const [secretID,setsecretID] = useState(id)
-
-
+    
+    
+    const handleGet = () => {
+        const id = queryParameters.get('code').split('.')[0]
+        const password = queryParameters.get('code').split('.')[1]
+        console.debug("id: ",id)
+        setSecretID(id)
+    }
+        
     useEffect(() => {
-        retrieveSecret(id).then((secret) => {
-            console.debug("secret: ",secret)
-        })
+        if(!retrieved && secretID !== ""){
+            retrieveSecret(secretID).then((secret) => {
+                console.debug("secret: ",secret)
+                setSecretValue(secret)
 
-    },[secretID])
+                setRetrived(true)    
+            })
+        }
+        
+    },[secretID,retrieved])
 
     return(
         <div>
-            <h1>your secret, params: {secretID}</h1>
+            <h1>your secret: {secretID} is {secretValue}</h1>
+            <button onClick={handleGet}>Get</button>
         </div>
     );
 }

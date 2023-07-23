@@ -34,6 +34,7 @@ func StoreSecret(b model.PostSecretRequest) string {
 	secret.id = getRandomId()
 	secret.secret = b.Payload
 	DB = append(DB, secret)
+	fmt.Print("Secret stored: ", secret)
 	return secret.id
 }
 
@@ -42,6 +43,8 @@ func GetSecret(id string) (string, error) {
 	for i, s := range DB {
 		if s.id == id {
 			// remove secret
+			fmt.Print("Secret found")
+			fmt.Print("Secret: ", s)
 			DB = append(DB[:i], DB[i+1:]...)
 			return s.secret, nil
 		}

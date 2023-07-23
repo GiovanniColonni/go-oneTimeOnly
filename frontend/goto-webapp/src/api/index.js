@@ -11,10 +11,10 @@ const url = 'http://localhost:8080'; // make this https
 const storeSecret = async (secret) => {
     try {
 
-        const resp = await axios.post(`${url}/secret`,JSON.stringify({payload:secret}));
+        const resp = await axios.post(`${url}/secret`,JSON.stringify({Payload:secret}));
         if(resp.status === 200){
             console.log("Successfully stored secret")
-            console.debug(resp.data)
+            console.debug("resp data:",resp.data)
             return resp.data
         }
         console.error("Error in storeSecret, status code: ",resp.status)
@@ -34,7 +34,7 @@ const storeSecret = async (secret) => {
  */
 const retrieveSecret = async (id) => {
     try{    
-        const resp = await axios.get(`${url}/retrieveSecret/${id}`);
+        const resp = await axios.get(`${url}/secret/${id}`);
         if(resp.status === 200){
             console.log("Successfully retrieved secret")
             return resp.data
