@@ -4,7 +4,7 @@ import {storeSecret} from '../api'
 const MainContent = () => {
     const [textValue,setTextValue] = useState('')
     const [send, setSend] = useState(false)
-
+    const [link, setLink] = useState('')
 
     const handleChange = (event) => {
         const {value} = event.target
@@ -22,9 +22,10 @@ const MainContent = () => {
     /**
      * Create a that you use to redirect to the page with the secret
      */
-    const createLink = () => {
-
+    const createLink = (id,password) => {
+        return "http://localhost:3000/retrieveSecret/id="+id+"?password="+password
     }
+
 
     /**
      * 
@@ -32,35 +33,39 @@ const MainContent = () => {
      * @returns 
      */
     const encryptText = (text) => {
-        const digest = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
         const password = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
-        return {text, password, digest} 
+        return {text, password} 
     }
  
     useEffect(() => {
         if(!send){
             return
         }
-        console.log(textValue)
-        const {encrypted,digest,password} = encryptText(textValue)
 
-        
+        const {encrypted,password} = encryptText(textValue)
 
-        setTextValue(encrypted)
+        //setTextValue(encrypted)
         
-        const id = storeSecret(encrypted)
-        
-        if(id === undefined){
-            // open a banner or somethng
+        storeSecret(encrypted).then((id) => {
+            if(id === undefined){
+                // open a banner or somethng
+                console.error("Error in storeSecret...")
+                return
+            }
+            console.debug("id: ",id)
+            setLink(createLink(id,password))
+    
+            setSend(!send)
+    
+        }).catch((error) => {
+
             console.error("Error in storeSecret...")
-            return
-        }
+            console.error(error)
+        })
         
-        createLink(digest)
-        setSend(!send)
-
-    },[send,textValue])
+        
+    },[send,link])
 
   return (
     <main>
@@ -69,6 +74,7 @@ const MainContent = () => {
             <textarea onChange={handleChange} value={textValue} rows="10" cols="100" placeholder="Enter your text here"></textarea>
         </div>
         <button onClick={handleClick}>Submit</button> 
+        {link}
       </div>
     </main>
   );
