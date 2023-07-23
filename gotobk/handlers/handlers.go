@@ -21,6 +21,9 @@ func HealthCeckHandler(w http.ResponseWriter, r *http.Request) {
 func GetSecretHandler(w http.ResponseWriter, r *http.Request) {
 	urls := r.URL.Query()
 	secretId := urls.Get("id")
+
+	fmt.Print("secretId: ", secretId, "\n")
+
 	if secretId == "" {
 		fmt.Print("bad pyalod request")
 		http.Error(w, "bad payload", http.StatusBadRequest)

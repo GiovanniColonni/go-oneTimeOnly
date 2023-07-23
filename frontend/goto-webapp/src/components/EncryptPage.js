@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {storeSecret} from '../api'
 
-const MainContent = () => {
+const EncryptPage = () => {
     const [textValue,setTextValue] = useState('')
     const [send, setSend] = useState(false)
     const [link, setLink] = useState('')
@@ -23,7 +23,7 @@ const MainContent = () => {
      * Create a that you use to redirect to the page with the secret
      */
     const createLink = (id,password) => {
-        return "http://localhost:3000/retrieveSecret/id="+id+"?password="+password
+        return "http://localhost:3000/retrieveSecret/?code="+id+"."+password
     }
 
 
@@ -70,14 +70,16 @@ const MainContent = () => {
   return (
     <main>
       <div>
+        <h1><url>{link}</url></h1>
         <div>
-            <textarea onChange={handleChange} value={textValue} rows="10" cols="100" placeholder="Enter your text here"></textarea>
+            <textarea onChange={handleChange} value={textValue} rows="40" cols="100" placeholder="Enter your text here"></textarea>
         </div>
         <button onClick={handleClick}>Submit</button> 
-        {link}
+        
       </div>
     </main>
   );
+
 };
 
-export default MainContent;
+export default EncryptPage;

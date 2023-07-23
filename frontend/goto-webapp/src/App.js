@@ -1,17 +1,27 @@
 import './App.css';
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+
 import Header from './components/Header';
 import Footer from './components/Footer';
-import MainPage from './components/MainPage';
+import EncryptPage from './components/EncryptPage';
+import DecryptPage from './components/DecryptPage';
 
 function App() {
   return (
+    <>
     <div className="App">
-    
       <Header />
-      <MainPage />
+        <Routes>
+          
+            <Route index element={<EncryptPage/>} />
+            <Route exact path="/retrieveSecret/*" element={<DecryptPage/>} />
+        
+        </Routes>
       <Footer />
-
     </div>
+    </>
   );
 }
 
