@@ -8,9 +8,13 @@ import (
 	model "onetimeonly/backend/gotobk/models"
 )
 
+const (
+	origin = "http://localhost:3000"
+)
+
 func HealthCeckHandler(w http.ResponseWriter, r *http.Request) {
 	//status := &Status{status: "ok"}
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:8080")
+	w.Header().Set("Access-Control-Allow-Origin", origin)
 	w.WriteHeader(http.StatusOK)
 }
 
@@ -30,12 +34,11 @@ func GetSecretHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:8080")
+	w.Header().Set("Access-Control-Allow-Origin", origin)
 	w.Write([]byte(secret))
 }
 
 func PostSecretHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Print("Storing secret...")
 	var reqBody model.PostSecretRequest
 
 	err := json.NewDecoder(r.Body).Decode(&reqBody)
@@ -44,16 +47,15 @@ func PostSecretHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "bad payload", http.StatusBadRequest)
 		return
 	}
-	exit := functions.StoreSecret(reqBody)
-	if !exit {
+	id := functions.StoreSecret(reqBody)
+	if id == "" {
 		fmt.Print("Error in storing secret")
 		http.Error(w, "Error in storing secret", http.StatusInternalServerError)
 		return
 	}
 
+	w.Header().Set("Access-Control-Allow-Origin", origin)
 	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:8080")
-	w.Write([]byte("Stored"))
+	w.Write([]byte(id))
 
-	fmt.Print("secret stored")
 }

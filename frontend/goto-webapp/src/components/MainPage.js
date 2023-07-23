@@ -16,20 +16,6 @@ const MainContent = () => {
         // call the api to encrypt the text
         // let it return an id
         // redirect to the page with the link
-        const {encrypted,digest,password} = encryptText(textValue)
-        
-        setTextValue(encrypted)
-        
-
-        const exit = storeSecret(encrypted)
-        
-        if(!exit){
-            console.error("Error in storeSecret...")
-            return
-        }
-        
-        createLink(digest)
-
         setSend(!send)
     }
 
@@ -45,7 +31,7 @@ const MainContent = () => {
      * @param {*} text 
      * @returns 
      */
-    const encryptText = async (text) => {
+    const encryptText = (text) => {
         const digest = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
         const password = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
@@ -53,8 +39,28 @@ const MainContent = () => {
     }
  
     useEffect(() => {
+        if(!send){
+            return
+        }
+        console.log(textValue)
+        const {encrypted,digest,password} = encryptText(textValue)
 
-    },[send])
+        
+
+        setTextValue(encrypted)
+        
+        const id = storeSecret(encrypted)
+        
+        if(id === undefined){
+            // open a banner or somethng
+            console.error("Error in storeSecret...")
+            return
+        }
+        
+        createLink(digest)
+        setSend(!send)
+
+    },[send,textValue])
 
   return (
     <main>

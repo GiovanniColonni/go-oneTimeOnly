@@ -10,17 +10,19 @@ const url = 'http://localhost:8080'; // make this https
  */
 const storeSecret = async (secret) => {
     try {
-        const resp = await axios.post(`${url}/storeSecret`, secret);
+
+        const resp = await axios.post(`${url}/secret`,JSON.stringify({payload:secret}));
         if(resp.status === 200){
             console.log("Successfully stored secret")
-            return true
+            console.debug(resp.data)
+            return resp.data
         }
         console.error("Error in storeSecret, status code: ",resp.status)
-        return false
+        return undefined
     }catch(error){
         console.error("Error in storeSecret")
         console.error(error);
-        return false
+        return undefined
     }
 
 

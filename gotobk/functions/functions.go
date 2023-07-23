@@ -28,13 +28,13 @@ func getRandomId() string {
 	return base64.URLEncoding.EncodeToString(randomByte)
 }
 
-func StoreSecret(b model.PostSecretRequest) bool {
+func StoreSecret(b model.PostSecretRequest) string {
 	// store secret + expiration date
 	var secret Storage
 	secret.id = getRandomId()
 	secret.secret = b.Payload
 	DB = append(DB, secret)
-	return true
+	return secret.id
 }
 
 func GetSecret(id string) (string, error) {
