@@ -39,9 +39,10 @@ func StoreSecret(b model.PostSecretRequest) string {
 
 func GetSecret(id string) (string, error) {
 	// check if id is actually a valid id
-	for _, s := range DB {
+	for i, s := range DB {
 		if s.id == id {
 			// remove secret
+			DB = append(DB[:i], DB[i+1:]...)
 			return s.secret, nil
 		}
 	}
