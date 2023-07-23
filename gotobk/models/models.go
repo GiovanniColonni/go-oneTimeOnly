@@ -9,23 +9,22 @@ type StoredSecret struct {
 // REQUESTS
 
 type PostSecretRequest struct {
-	Id      string
 	Payload string
 }
 
 // RESPONSES
 
 type Status struct {
-	status string
+	Status string
 }
 
 type GetSecretResponse struct {
-	status string
-	exit   bool
+	Status string
+	Exit   bool
 }
 
 type PostSecretResponse struct {
-	status string
+	Status string
 	exit   bool
 	id     string
 }

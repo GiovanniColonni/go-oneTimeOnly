@@ -10,6 +10,7 @@ import (
 
 func HealthCeckHandler(w http.ResponseWriter, r *http.Request) {
 	//status := &Status{status: "ok"}
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:8080")
 	w.WriteHeader(http.StatusOK)
 }
 
@@ -29,6 +30,7 @@ func GetSecretHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:8080")
 	w.Write([]byte(secret))
 }
 
@@ -50,6 +52,7 @@ func PostSecretHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:8080")
 	w.Write([]byte("Stored"))
 
 	fmt.Print("secret stored")

@@ -7,3 +7,7 @@ original soruce = https://bitbucket.org/arnoh/onetimeonly/src/master/
 # BACKEND
 
 go env -w GO111MODULE=auto
+
+# Frontend
+https://codepen.io/gwannon/pen/LYjvOLK -> use this as the style of the frontend
+

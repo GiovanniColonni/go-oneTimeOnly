@@ -8,9 +8,10 @@ import (
 )
 
 // other chagn
-// ToDo: - Logger from standardlib
+// TODO: - Logger from standardlib
 //		 - Use standard library net/http for the server + context
-
+//		 - unify way in which AccessControl header is set, like a middleware
+//	     - write tests
 func main() {
 
 	r := routes.RegisterRouter()
