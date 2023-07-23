@@ -29,6 +29,6 @@ func GetSecret(id string) (string, error) {
 		}
 	}
 	fmt.Print("No Secret find")
-	return "", errors.New("No secret find with id")
+	return "", errors.New("no secret find with id")
 
 }
