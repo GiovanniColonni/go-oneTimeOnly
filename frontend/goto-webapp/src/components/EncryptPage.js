@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {storeSecret} from '../api'
+import { encryptMessage } from '../utils/utils';
+// TODO personalize the encryption params
 
 const EncryptPage = () => {
     const [textValue,setTextValue] = useState('')
@@ -34,7 +36,9 @@ const EncryptPage = () => {
      */
     const encryptText = (text) => {
         const password = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-        const encrypted = text
+        const encryptedObj = encryptMessage(text,password)
+        const encrypted = encryptedObj.ct
+        console.log("encrypted output :",encrypted)
         return {encrypted, password} 
     }
  

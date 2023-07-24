@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import { retrieveSecret } from '../api';
+import { decryptMessage } from '../utils/utils';
 
 function DecryptPage(){
 
@@ -17,12 +18,14 @@ function DecryptPage(){
         const password = queryParameters.get('code').split('.')[1]
         console.debug("id: ",id)
         setSecretID(id)
+        
     }
         
     useEffect(() => {
         if(!retrieved && secretID !== ""){
             retrieveSecret(secretID).then((secret) => {
                 console.debug("secret: ",secret)
+                const decrypted = decryptMessage(secret,queryParameters.get('code').split('.')[1])
                 setSecretValue(secret)
 
                 setRetrived(true)    

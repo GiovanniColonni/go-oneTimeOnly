@@ -16,8 +16,6 @@ const storeSecret = async (secret) => {
             "Content-Type": "application/json"
         }}
         
-        console.error("payload:",payload)
-
         const resp = await axios.post(`${url}/secret`,payload,header);
         if(resp.status === 200){
             console.log("Successfully stored secret")
