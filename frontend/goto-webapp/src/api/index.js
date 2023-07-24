@@ -6,12 +6,19 @@ const url = 'http://localhost:8080'; // make this https
 /**
  * Store a secret in the backend database
  * @param {string} secret the encrypted secret to be stored 
- * @returns true is status == 200, false otherwise
+ * @returns resp.data if status == 200, undefined otherwise
  */
 const storeSecret = async (secret) => {
     try {
+        const payload = {payload:secret}
+        
+        const header = {headers: {
+            "Content-Type": "application/json"
+        }}
+        
+        console.error("payload:",payload)
 
-        const resp = await axios.post(`${url}/secret`,JSON.stringify({Payload:secret}));
+        const resp = await axios.post(`${url}/secret`,payload,header);
         if(resp.status === 200){
             console.log("Successfully stored secret")
             console.debug("resp data:",resp.data)

@@ -12,6 +12,6 @@ func RegisterRouter() *mux.Router {
 	r.HandleFunc("/health", handlers.HealthCeckHandler).Methods("GET")
 	r.HandleFunc("/secret/{id}", handlers.GetSecretHandler).Methods("GET")
 	r.HandleFunc("/secret", handlers.PostSecretHandler).Methods("POST")
-
+	r.HandleFunc("/secret", handlers.OptionSecretHandler).Methods("OPTIONS")
 	return r
 }

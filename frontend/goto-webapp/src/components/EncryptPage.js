@@ -34,8 +34,8 @@ const EncryptPage = () => {
      */
     const encryptText = (text) => {
         const password = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-
-        return {text, password} 
+        const encrypted = text
+        return {encrypted, password} 
     }
  
     useEffect(() => {
@@ -46,7 +46,7 @@ const EncryptPage = () => {
         const {encrypted,password} = encryptText(textValue)
 
         //setTextValue(encrypted)
-        
+        console.log("encrypted:",encrypted)
         storeSecret(encrypted).then((id) => {
             if(id === undefined){
                 // open a banner or somethng
