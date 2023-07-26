@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {storeSecret} from '../api'
 import { encryptMessage } from '../utils/utils';
 // TODO personalize the encryption params
@@ -7,10 +7,11 @@ const EncryptPage = () => {
     const [textValue,setTextValue] = useState('')
     const [send, setSend] = useState(false)
     const [link, setLink] = useState('')
-
+    let password = useRef('')
+    
     const handleChange = (event) => {
         const {value} = event.target
-        setTextValue(value)
+        //setTextValue(value)
     }
 
 
@@ -35,29 +36,30 @@ const EncryptPage = () => {
      * @returns 
      */
     const encryptText = (text) => {
-        const password = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-        const encryptedObj = encryptMessage(text,password)
-        const encrypted = encryptedObj.ct
+        const {encryptedObj,password} = encryptMessage(text)
+        const encrypted = encryptedObj
         console.log("encrypted output :",encrypted)
         return {encrypted, password} 
     }
- 
+    
     useEffect(() => {
         if(!send){
             return
         }
-
-        const {encrypted,password} = encryptText(textValue)
-
+        let encrypted 
+        
+        //({encrypted,password} = encryptText(textValue))
         //setTextValue(encrypted)
+
         console.log("encrypted:",encrypted)
+        /*
         storeSecret(encrypted).then((id) => {
             if(id === undefined){
                 // open a banner or somethng
                 console.error("Error in storeSecret...")
                 return
             }
-            setLink(createLink(id,password))
+            //setLink(createLink(id,password))
     
             setSend(!send)
     
@@ -66,14 +68,14 @@ const EncryptPage = () => {
             console.error("Error in storeSecret...")
             console.error(error)
         })
-        
+        */
         
     },[send,link])
-
+    // <h1><a href={link}>{link}</a></h1>
   return (
     <main>
       <div>
-        <h1><url>{link}</url></h1>
+        
         <div>
             <textarea onChange={handleChange} value={textValue} rows="40" cols="100" placeholder="Enter your text here"></textarea>
         </div>
