@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "sjcl": "^1.0.8"
+  },
+  "browser":{
+    "crypto": false
   }
 }

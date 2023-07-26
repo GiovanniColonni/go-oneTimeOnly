@@ -1,4 +1,5 @@
 import CryptoJS from 'crypto-js'   
+// https://cryptojs.gitbook.io/docs/
 
 CryptoJS.AES.encrypt("Message", "Secret Passphrase");
 
@@ -8,7 +9,7 @@ const createPassword = () => {
     //var bits = sjcl.random.randomWords(10, 0);
     //var b64 = sjcl.codec.base64.fromBits(bits);
     return Math.random().toString(36).slice(-8);
-    
+
     //return b64.replace(/[+=\/]/g, '').substr(0, 25);
 }
 
@@ -18,11 +19,12 @@ function encryptMessage(msg){
     //params.salt = sjcl.random.randomWords(2,0)
     
     const password = createPassword()
-    const encryptMessage = CryptoJS.AES.encrypt(msg,password);
+    const encryptMessage = CryptoJS.AES.encrypt(msg,password).toString();
  
-    console.log("encrypted message: ",encryptMessage)
+    console.log("encrypted message: ",encryptMessage.toString())
     
-    return {encryptMessage,password}
+    return {msg:encryptMessage,
+            pwd:password}
 
 }
 

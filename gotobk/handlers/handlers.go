@@ -82,8 +82,7 @@ func PostSecretHandler(w http.ResponseWriter, r *http.Request) {
 
 func OptionSecretHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO is it relly necessary? can we find a way to intercept all the
-	// options call and responde with this?
-	fmt.Print("OPTION CALlED !")
+	// options call and responde with this? like a middlewere
 	setCORS(&w)
 	w.WriteHeader(http.StatusNoContent)
 }

@@ -34,10 +34,10 @@ function DecryptPage(){
         }
         
     },[secretID])
-    // <h1>your secret: {secretID} is {secretValue}</h1>
             
     return(
         <div>
+            <h1>your secret: {secretID} is {secretValue}</h1>
             <button onClick={handleGet}>Get</button>
         </div>
     );

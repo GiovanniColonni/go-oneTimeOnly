@@ -7,11 +7,10 @@ const EncryptPage = () => {
     const [textValue,setTextValue] = useState('')
     const [send, setSend] = useState(false)
     const [link, setLink] = useState('')
-    let password = useRef('')
-    
+
     const handleChange = (event) => {
         const {value} = event.target
-        //setTextValue(value)
+        setTextValue(value)
     }
 
 
@@ -30,52 +29,47 @@ const EncryptPage = () => {
     }
 
 
-    /**
-     * 
-     * @param {*} text 
-     * @returns 
-     */
+    
     const encryptText = (text) => {
-        const {encryptedObj,password} = encryptMessage(text)
-        const encrypted = encryptedObj
-        console.log("encrypted output :",encrypted)
-        return {encrypted, password} 
+        const encryptionRes = encryptMessage(text)
+        
+        const encrypted = encryptionRes.msg
+        const pwd = encryptionRes.pwd
+        
+        return {encrypted, pwd} 
     }
     
     useEffect(() => {
         if(!send){
             return
         }
-        let encrypted 
         
-        //({encrypted,password} = encryptText(textValue))
-        //setTextValue(encrypted)
-
-        console.log("encrypted:",encrypted)
-        /*
+        const {encrypted,pwd} = encryptText(textValue)
+        
         storeSecret(encrypted).then((id) => {
             if(id === undefined){
                 // open a banner or somethng
                 console.error("Error in storeSecret...")
                 return
             }
-            //setLink(createLink(id,password))
-    
+            setLink(createLink(id,pwd))
             setSend(!send)
+            setTextValue(encrypted)
+    
     
         }).catch((error) => {
 
             console.error("Error in storeSecret...")
             console.error(error)
         })
-        */
+    
         
     },[send,link])
-    // <h1><a href={link}>{link}</a></h1>
+    
   return (
     <main>
       <div>
-        
+      <h1><a href={link}>{link}</a></h1>
         <div>
             <textarea onChange={handleChange} value={textValue} rows="40" cols="100" placeholder="Enter your text here"></textarea>
         </div>
