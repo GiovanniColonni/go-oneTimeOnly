@@ -19,18 +19,18 @@ function encryptMessage(msg){
     //params.salt = sjcl.random.randomWords(2,0)
     
     const password = createPassword()
-    const encryptMessage = CryptoJS.AES.encrypt(msg,password).toString();
+    const encryptedMessage = CryptoJS.AES.encrypt(msg,password).toString();
  
-    console.log("encrypted message: ",encryptMessage.toString())
-    
-    return {msg:encryptMessage,
+    console.log("encrypted message: ",encryptedMessage.toString())
+
+    return {msg:encryptedMessage,
             pwd:password}
 
 }
 
 function decryptMessage(msg,password){
     try {
-        return CryptoJS.AES.decrypt(msg,password)    
+        return CryptoJS.AES.decrypt(msg,password).toString(CryptoJS.enc.Utf8)   
     } catch (error) {
         console.error("Error in decryptMessage")
         console.error(error)

@@ -46,7 +46,7 @@ const EncryptPage = () => {
         
         const {encrypted,pwd} = encryptText(textValue)
         
-        storeSecret(encrypted).then((id) => {
+        storeSecret(encrypted.toString()).then((id) => {
             if(id === undefined){
                 // open a banner or somethng
                 console.error("Error in storeSecret...")
@@ -55,7 +55,6 @@ const EncryptPage = () => {
             setLink(createLink(id,pwd))
             setSend(!send)
             setTextValue(encrypted)
-    
     
         }).catch((error) => {
 
