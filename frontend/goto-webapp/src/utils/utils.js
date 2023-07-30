@@ -1,7 +1,6 @@
 import CryptoJS from 'crypto-js'   
 // https://cryptojs.gitbook.io/docs/
 
-CryptoJS.AES.encrypt("Message", "Secret Passphrase");
 
 
 
