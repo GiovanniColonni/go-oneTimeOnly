@@ -28,6 +28,7 @@ function DecryptPage(){
                 //var decrypted = ""
                 if(secret !== undefined){
                     const decrypted = decryptMessage(secret,password)
+                    console.debug("decrypted: ",decrypted)
                     setSecretValue(decrypted ? decrypted : '')
                 }
             })
@@ -36,10 +37,17 @@ function DecryptPage(){
     },[secretID])
             
     return(
-        <div>
-            <h1>your secret: {secretID} is {secretValue}</h1>
-            <button onClick={handleGet}>Get</button>
-        </div>
+        <main>
+            <div className='cyberpunk'>
+                {secretValue !== "" && <p className="cyberpunk">
+                    <h1>Secret Value</h1>
+                {secretValue}
+            </p>}
+            
+            </div>
+            
+            {secretValue === "" && <section  width={"50%"} height={"30%"}  className="cyberpunk black both"><button className="cyberpunk green" onClick={handleGet}>Get</button></section>}
+        </main>
     );
 }
 

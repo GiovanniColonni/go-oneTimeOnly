@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom';
 const Header = () => {
   return (
     <header>
-      <h1>
-        <Link to="/">Simple Header</Link>
-      </h1>
     </header>
   );
 };

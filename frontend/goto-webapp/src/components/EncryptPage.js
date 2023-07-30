@@ -15,9 +15,6 @@ const EncryptPage = () => {
 
 
     const handleClick = () => {
-        // call the api to encrypt the text
-        // let it return an id
-        // redirect to the page with the link
         setSend(!send)
     }
 
@@ -55,7 +52,7 @@ const EncryptPage = () => {
             setLink(createLink(id,pwd))
             setSend(!send)
             setTextValue(encrypted)
-    
+             
         }).catch((error) => {
 
             console.error("Error in storeSecret...")
@@ -72,11 +69,11 @@ const EncryptPage = () => {
   return (
     <main>
       <div>
-      {link !== "" && <button onClick={copyLink}>Copy Link</button>}
+      {link !== "" && <button className="cyberpunk green" onClick={copyLink}>Copy Link</button>}
         <div>
-            <textarea onChange={handleChange} value={textValue} rows="40" cols="100" placeholder="Enter your text here"></textarea>
+            <textarea  className="cyberpunk" onChange={handleChange} value={textValue} rows="20" cols="100" placeholder="Enter your text here"></textarea>
         </div>
-        <button onClick={handleClick}>Submit</button> 
+        <button className="cyberpunk green" onClick={handleClick}>Submit</button> 
         
       </div>
     </main>
