@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import {storeSecret} from '../api'
 import { encryptMessage } from '../utils/utils';
 // TODO personalize the encryption params
@@ -64,11 +64,15 @@ const EncryptPage = () => {
     
         
     },[send,link])
-    
+
+    const copyLink = () => {
+        navigator.clipboard.writeText(link)
+    }
+
   return (
     <main>
       <div>
-      <h1><a href={link}>{link}</a></h1>
+      {link !== "" && <button onClick={copyLink}>Copy Link</button>}
         <div>
             <textarea onChange={handleChange} value={textValue} rows="40" cols="100" placeholder="Enter your text here"></textarea>
         </div>
