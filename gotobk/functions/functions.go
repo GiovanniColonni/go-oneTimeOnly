@@ -5,7 +5,8 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
-	"onetimeonly/backend/gotobk/db"
+
+	//"onetimeonly/backend/gotobk/db"
 	model "onetimeonly/backend/gotobk/models"
 )
 
@@ -33,7 +34,8 @@ func StoreSecret(b model.PostSecretRequest) string {
 	// store secret + expiration date
 	var id string = getRandomId()
 	var secret string = b.Payload
-	db.StoreSecretDB(id, secret)
+	//db.StoreSecretDB(id, secret)
+	DB = append(DB, Storage{id, secret})
 	fmt.Print("Secret stored: ", secret)
 	return id
 }

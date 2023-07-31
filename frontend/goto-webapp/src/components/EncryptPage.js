@@ -7,7 +7,7 @@ const EncryptPage = () => {
     const [textValue,setTextValue] = useState('')
     const [send, setSend] = useState(false)
     const [link, setLink] = useState('')
-
+    const [error,setError] = useState(false)
     const handleChange = (event) => {
         const {value} = event.target
         setTextValue(value)
@@ -45,14 +45,15 @@ const EncryptPage = () => {
         
         storeSecret(encrypted.toString()).then((id) => {
             if(id === undefined){
-                // open a banner or somethng
-                console.error("Error in storeSecret...")
+                setError(true)
                 return
             }
             setLink(createLink(id,pwd))
             setSend(!send)
             setTextValue(encrypted)
-             
+            return(
+                navigator.clipboard.writeText(link)
+            )
         }).catch((error) => {
 
             console.error("Error in storeSecret...")
@@ -74,7 +75,7 @@ const EncryptPage = () => {
             <textarea  className="cyberpunk" onChange={handleChange} value={textValue} rows="20" cols="100" placeholder="Enter your text here"></textarea>
         </div>
         <button className="cyberpunk green" onClick={handleClick}>Submit</button> 
-        
+        {error && <p className="cyberpunk red">Error in storing secret</p>}
       </div>
     </main>
   );
