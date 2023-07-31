@@ -48,6 +48,12 @@ footer {
   align-items: center;
   justify-content: center;
 }
+
+.hidden {
+  display: none;
+}
+
+
 :root {
   --glitched-duration: 0.9s;
   --glitched-long-duration: 3s;

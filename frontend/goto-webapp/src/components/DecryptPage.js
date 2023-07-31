@@ -1,4 +1,4 @@
-import React,{useEffect,useState,useRef} from 'react';
+import React,{useEffect,useState} from 'react';
 import { retrieveSecret } from '../api';
 import { decryptMessage } from '../utils/utils';
 
@@ -8,15 +8,14 @@ function DecryptPage(){
     const queryParameters = new URLSearchParams(window.location.search)
 
     const [secretID, setSecretID] = useState("")
-    const [retrieved,setRetrived] = useState(false)
     const [secretValue,setSecretValue] = useState("")
     const password = queryParameters.get('code').split('.')[1]
     
-    
+    const copySecret = () => {
+        navigator.clipboard.writeText(secretValue)
+    }
     const handleGet = () => {
         const id = queryParameters.get('code').split('.')[0]
-        const password = queryParameters.get('code').split('.')[1]
-        console.debug("id: ",id)
         setSecretID(id) 
     }
         
@@ -30,6 +29,9 @@ function DecryptPage(){
                     const decrypted = decryptMessage(secret,password)
                     console.debug("decrypted: ",decrypted)
                     setSecretValue(decrypted ? decrypted : '')
+                }else{
+                    const msg_err_banner = document.getElementById("msg_err_banner")
+                    msg_err_banner.classList.remove('hidden')
                 }
             })
         }
@@ -43,10 +45,11 @@ function DecryptPage(){
                     <h1>Secret Value</h1>
                 {secretValue}
             </p>}
-            
+            <p id="msg_err_banner" className='hidden'>Error in retrieving secret</p>
             </div>
             
             {secretValue === "" && <section  width={"50%"} height={"30%"}  className="cyberpunk black both"><button className="cyberpunk green" onClick={handleGet}>Get</button></section>}
+            {secretValue !== "" && <button className="cyberpunk red" onClick={copySecret}>Copy</button>}
         </main>
     );
 }
