@@ -10,26 +10,15 @@ import (
 	"github.com/gorilla/mux"
 )
 
-const (
-	origin = "http://localhost:3000"
-)
-
-func setCORS(w *http.ResponseWriter) {
-	(*w).Header().Set("Access-Control-Allow-Origin", origin)
-	(*w).Header().Set("Access-Control-Allow-Headers", "Content-Type")
-}
-
 func HealthCeckHandler(w http.ResponseWriter, r *http.Request) {
 	//status := &Status{status: "ok"}
-	setCORS(&w)
+	//setCORS(&w)
 	w.WriteHeader(http.StatusOK)
 }
 
 func GetSecretHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)["id"]
 	secretId := vars
-
-	setCORS(&w)
 
 	fmt.Print("secretId: ", secretId, "\n")
 
@@ -54,8 +43,6 @@ func GetSecretHandler(w http.ResponseWriter, r *http.Request) {
 
 func PostSecretHandler(w http.ResponseWriter, r *http.Request) {
 	var reqBody model.PostSecretRequest
-
-	setCORS(&w)
 
 	err := json.NewDecoder(r.Body).Decode(&reqBody)
 	if err != nil {
@@ -83,6 +70,5 @@ func PostSecretHandler(w http.ResponseWriter, r *http.Request) {
 func OptionSecretHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO is it relly necessary? can we find a way to intercept all the
 	// options call and responde with this? like a middlewere
-	setCORS(&w)
 	w.WriteHeader(http.StatusNoContent)
 }
