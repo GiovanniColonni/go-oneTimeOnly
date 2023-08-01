@@ -45,7 +45,7 @@ function DecryptPage(){
                     <h1>Secret Value</h1>
                 {secretValue}
             </p>}
-            <p id="msg_err_banner" className='hidden'>Error in retrieving secret</p>
+            <p id="msg_err_banner" className='hidden'>Error in retrieving secret, it can be a server error or the secret has already been retrieved</p>
             </div>
             
             {secretValue === "" && <section  width={"50%"} height={"30%"}  className="cyberpunk black both"><button className="cyberpunk green" onClick={handleGet}>Get</button></section>}

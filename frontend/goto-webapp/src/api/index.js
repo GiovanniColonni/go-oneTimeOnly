@@ -44,6 +44,10 @@ const retrieveSecret = async (id) => {
             console.log("Successfully retrieved secret")
             return resp.data
         }
+        if(resp.status === 404){
+            console.log("Secret not found")
+            return undefined
+        }
         console.error("Error in retrieveSecret, status code: ",resp.status)
         return undefined
 

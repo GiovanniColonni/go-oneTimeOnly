@@ -7,11 +7,6 @@ import Footer from './components/Footer';
 import EncryptPage from './components/EncryptPage';
 import DecryptPage from './components/DecryptPage';
 
-// TODO:
-// - banners in case of errors
-// - add a button to copy the link
-// - graphics of the page
-
 
 function App() {
   return (
