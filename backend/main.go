@@ -13,14 +13,6 @@ const (
 	host = "localhost:8080"
 )
 
-// other chagn
-// TODO: - Logger from standardlib
-//		 - unify way in which AccessControl header is set, like a middleware
-//	     - write tests
-// 		 - use a database
-//		 - verify query params
-//		 - integrate planet scale
-
 func main() {
 
 	envErr := godotenv.Load(".env")
