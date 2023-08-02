@@ -90,6 +90,12 @@ const EncryptPage = () => {
         navigator.clipboard.writeText(link)
     }
 
+    const newSecret = () => {
+        setTextValue('')
+        setSend(false)
+        setLink('')
+        setError(false)
+    }
 
     const onChangeMode = () => {
         const selector = document.getElementById("encryptionModeParam")
@@ -134,14 +140,26 @@ const EncryptPage = () => {
         
     }
 
+  const copyOrNew = () => {
+    return(
+        <div className='cyberpunk' style={{marginBottom: "100px"}}>
+            <h1 className="cyberpunk">Actions</h1>
+            <button className="cyberpunk green" onClick={copyLink}>Copy Link</button>
+            <button className="cyberpunk red" onClick={newSecret}>EncryptNew</button>
+        
+        </div>
+    )
+    } 
+
   return (
     <main>
+        
+        {!link && <div className='cyberpunk'>
         <h1 className="cyberpunk">Choose your parameters</h1>
-        <div className='cyberpunk'>
                 {formParams()}
-        </div>
-      <div>
-      {link !== "" && <button className="cyberpunk green" onClick={copyLink}>Copy Link</button>}
+        </div>}
+    <div>
+        {link !== "" &&  copyOrNew()}
         <div>
             <h1 className="cyberpunk">Enter your secret</h1>
             <textarea  className="cyberpunk" onChange={handleChange} value={textValue} rows="20" cols="100" placeholder="Enter your text here"></textarea>
