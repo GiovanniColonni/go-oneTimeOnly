@@ -10,7 +10,8 @@ function DecryptPage(){
     const [secretID, setSecretID] = useState("")
     const [secretValue,setSecretValue] = useState("")
     const password = queryParameters.get('code').split('.')[1]
-    
+    const [error,setError] = useState(false)
+
     const copySecret = () => {
         navigator.clipboard.writeText(secretValue)
     }
@@ -22,34 +23,50 @@ function DecryptPage(){
     useEffect(() => {
         if(secretValue === "" && secretID !== ""){
             retrieveSecret(secretID).then((secret) => {
-                console.debug("secret: ",secret)
+                console.debug("secret: ",secret,secret !== undefined)
                 console.debug("queryParameters: ",queryParameters.get('code')) 
                 //var decrypted = ""
+                setError(secret === undefined)
                 if(secret !== undefined){
                     const decrypted = decryptMessage(secret,password)
                     console.debug("decrypted: ",decrypted)
                     setSecretValue(decrypted ? decrypted : '')
                 }else{
-                    const msg_err_banner = document.getElementById("msg_err_banner")
-                    msg_err_banner.classList.remove('hidden')
+                    console.log("Error in retrieving secret")
                 }
             })
         }
         
-    },[secretID])
-            
+    },[secretID,error])
+
+    const goToHome = () => {
+        window.location.href = "http://localhost:3000/"
+    }
+
     return(
         <main>
-            <div className='cyberpunk'>
-                {secretValue !== "" && <p className="cyberpunk">
+            {secretValue !== "" && 
+            <div className="cyberpunk black both">
+                
+            <section className='cyberpunk'>
+                 <p className="cyberpunk">
                     <h1>Secret Value</h1>
                 {secretValue}
-            </p>}
-            <p id="msg_err_banner" className='hidden'>Error in retrieving secret, it can be a server error or the secret has already been retrieved</p>
-            </div>
+            </p>
+            </section>
+            </div>}
+            {
+                error && <section className='cyberpunk'>
+                <p id="msg_err_banner" ><h1>Error in retrieving secret</h1> it can be a server error or the secret has already been retrieved</p>
+            </section>
+            
+            }
             
             {secretValue === "" && <section  width={"50%"} height={"30%"}  className="cyberpunk black both"><button className="cyberpunk green" onClick={handleGet}>Get</button></section>}
-            {secretValue !== "" && <button className="cyberpunk red" onClick={copySecret}>Copy</button>}
+            <div className="cyberpunk black both">
+                {secretValue !== "" && <button className="cyberpunk red" onClick={copySecret}>Copy</button>}
+                {secretValue !== "" && <button className="cyberpunk purple" onClick={goToHome}>Go to encryption</button>}
+            </div>
         </main>
     );
 }
