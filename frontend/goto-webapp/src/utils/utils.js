@@ -12,13 +12,14 @@ const createPassword = () => {
     //return b64.replace(/[+=\/]/g, '').substr(0, 25);
 }
 
-function encryptMessage(msg){
+function encryptMessage(msg,encryptionParam){
     //TODO entropy  !! -> sjlc.random.addEntropy()
     //params.iv = sjcl.random.randomWords(4,0)
     //params.salt = sjcl.random.randomWords(2,0)
-    
+    console.log("encryptionParam: ",encryptionParam)
     const password = createPassword()
-    const encryptedMessage = CryptoJS.AES.encrypt(msg,password).toString();
+    
+    const encryptedMessage = CryptoJS.AES.encrypt(msg,password,encryptionParam).toString();
  
     console.log("encrypted message: ",encryptedMessage.toString())
 

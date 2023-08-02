@@ -50,5 +50,6 @@ func RegisterRouter() *mux.Router {
 	r.HandleFunc("/secret/{id}", handlers.GetSecretHandler).Methods("GET")
 	r.HandleFunc("/secret", handlers.PostSecretHandler).Methods("POST")
 	r.HandleFunc("/secret", handlers.OptionSecretHandler).Methods("OPTIONS")
+
 	return r
 }
